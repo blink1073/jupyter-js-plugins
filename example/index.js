@@ -4,6 +4,9 @@
 
 var phosphide = require('phosphide/lib/core/application');
 
+require('jupyter-js-plugins/lib/default-theme/index.css');
+
+
 var app = new phosphide.Application({
   extensions: [
     require('phosphide/lib/extensions/commandpalette').commandPaletteExtension,

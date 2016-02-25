@@ -3,16 +3,16 @@
 'use strict';
 
 import {
+  IContentsModel
+} from 'jupyter-js-services';
+
+import {
   DocumentManager
-} from 'jupyter-js-docmanager';
+} from 'jupyter-js-ui/lib/docmanager';
 
 import {
   FileBrowserWidget, FileBrowserModel
-} from 'jupyter-js-filebrowser';
-
-import {
-  IContentsModel
-} from 'jupyter-js-services';
+} from 'jupyter-js-ui/lib/filebrowser';
 
 import {
   Application
@@ -84,9 +84,8 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
     {
       id: newTextFileId,
       handler: () => {
-        widget.newUntitled('file', '.txt').then(
-          contents => onOpenRequested(contents)
-        );
+        widget.newUntitled('file', '.txt')
+          .then(contents => onOpenRequested(contents));
       }
     }
   ]);
@@ -106,9 +105,8 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
     {
       id: newNotebookId,
       handler: () => {
-        widget.newUntitled('notebook').then(
-          contents => onOpenRequested(contents)
-        );
+        widget.newUntitled('notebook')
+          .then(contents => onOpenRequested(contents));
       }
     }
   ]);
@@ -209,6 +207,10 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
     {
       id: 'file-browser:hide',
       handler: hideBrowser
+    },
+    {
+      id: 'file-browser:toggle',
+      handler: toggleBrowser
     }
   ]);
 
@@ -217,7 +219,7 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
   }
 
   let id = 0;
-  widget.openRequested.connect((browser, model) => onOpenRequested(model));
+  model.openRequested.connect((bModel, model) => onOpenRequested(model));
 
   widget.title.text = 'Files';
   widget.id = 'file-browser';
@@ -230,6 +232,14 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
 
   function hideBrowser(): void {
     if (!widget.isHidden) app.shell.collapseLeft();
+  }
+
+  function toggleBrowser(): void {
+    if (widget.isHidden) {
+      showBrowser();
+    } else {
+      hideBrowser();
+    }
   }
 }
 
