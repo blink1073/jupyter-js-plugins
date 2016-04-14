@@ -77,11 +77,6 @@ const SHORTCUTS = [
     sequence: ['Ctrl Shift Q']
   },
   {
-    command: 'notebook:run-selected-cell',
-    selector: '.jp-Notebook-cell',
-    sequence: ['Shift Enter']
-  },
-  {
     command: 'help-doc:toggle',
     selector: 'body',
     sequence: ['Accel Shift H']
@@ -89,6 +84,86 @@ const SHORTCUTS = [
   {
     command: 'help-doc:hide',
     selector: 'body[data-right-area="help-doc"]',
+    sequence: ['Escape']
+  },
+  {
+    command: 'notebook-cells:runAndAdvance',
+    selector: '.jp-Notebook',
+    sequence: ['Shift Enter']
+  },
+  {
+    command: 'notebook:interrupt-kernel',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['I', 'I']
+  },
+  {
+    command: 'notebook:restart-kernel',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['0', '0']
+  },
+  {
+    command: 'notebook-cells:to-code',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['Y']
+  },
+  {
+    command: 'notebook-cells:to-markdown',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['M']
+  },
+  {
+    command: 'notebook-cells:to-raw',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['R']
+  },
+  {
+    command: 'notebook-cells:cut',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['X']
+  },
+  {
+    command: 'notebook-cells:copy',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['C']
+  },
+  {
+    command: 'notebook-cells:paste',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['V']
+  },
+  {
+    command: 'notebook-cells:insert-above',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['A']
+  },
+  {
+    command: 'notebook-cells:insert-below',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['B']
+  },
+  {
+    command: 'notebook-cells:select-previous',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['ArrowUp']
+  },
+  {
+    command: 'notebook-cells:select-next',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['ArrowDown']
+  },
+  {
+    command: 'notebook-cells:toggle-linenumbers',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['L']
+  },
+  {
+    command: 'notebook-cells:editMode',
+    selector: '.jp-Notebook.jp-mod-commandMode',
+    sequence: ['Enter']
+  },
+  {
+    command: 'notebook-cells:commandMode',
+    selector: '.jp-Notebook.jp-mod-editMode',
     sequence: ['Escape']
   }
 ];
@@ -105,5 +180,3 @@ const shortcutsExtension = {
     return Promise.resolve(void 0);
   }
 };
-
-

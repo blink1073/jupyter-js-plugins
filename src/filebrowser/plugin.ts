@@ -19,7 +19,11 @@ import {
 } from 'phosphide/lib/core/application';
 
 import {
-  Menu, MenuBar, MenuItem
+  IChangedArgs
+} from 'phosphor-properties';
+
+import {
+  Menu, MenuItem
 } from 'phosphor-menus';
 
 import {
@@ -61,6 +65,7 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
     menu.popup(x, y);
   });
 
+  let id = 0;
   let onOpenRequested = (model: IContentsModel) => {
     let widget = manager.open(model);
     if (!widget.id) widget.id = `document-manager-${++id}`;
@@ -73,7 +78,14 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
     if (tabs instanceof TabPanel) {
       tabs.currentWidget = widget;
     }
-  }
+  };
+
+  let onFileChanged = (args: IChangedArgs<string>) => {
+    manager.rename(args.oldValue, args.newValue);
+  };
+
+  model.openRequested.connect((bModel, model) => onOpenRequested(model));
+  model.fileChanged.connect((mModel, args) => onFileChanged(args));
 
   // Create a command to add a new empty text file.
   // This requires an id and an instance of a command object.
@@ -216,14 +228,12 @@ function activateFileBrowser(app: Application, manager: DocumentManager, provide
 
   widget.widgetFactory = model => {
     return manager.open(model);
-  }
-
-  let id = 0;
-  model.openRequested.connect((bModel, model) => onOpenRequested(model));
+  };
 
   widget.title.text = 'Files';
   widget.id = 'file-browser';
   app.shell.addToLeftArea(widget, { rank: 40 });
+  showBrowser();
   return Promise.resolve(void 0);
 
   function showBrowser(): void {
@@ -299,6 +309,6 @@ function createMenu(fbWidget: FileBrowserWidget):  Menu {
       text: 'Shutdown Kernel',
       icon: 'fa fa-stop-circle-o',
       handler: () => { fbWidget.shutdownKernels(); }
-    }),
+    })
   ]);
 }

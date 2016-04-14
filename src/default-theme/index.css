@@ -8,6 +8,7 @@
 @import url('~jupyter-js-ui/lib/theme.css');
 @import './commandpalette.css';
 @import './help.css';
+@import './about.css';
 
 body {
   margin: 0;
@@ -32,6 +33,17 @@ body {
   min-height: 120px;
   outline: none;
 }
+
+
+.jp-NotebookContainer-widget {
+  flex: 0 0 auto;
+}
+
+
+.jp-Notebook {
+  flex: 1 1 auto;
+}
+
 
 
 .jp-FileBrowser {
@@ -172,7 +184,7 @@ body {
 
 
 .p-TabBar-tab {
-  flex-basis: 124px;
+  flex-basis: 144px;
   min-height: 23px;
   max-height: 23px;
   min-width: 35px;
