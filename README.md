@@ -4,8 +4,9 @@ Jupyter JS Plugins
 Plugins for JupyterLab.  The default set of [phosphide](https://github.com/phosphorjs/phosphide) 
 plugins used to create [JupyterLab](https://github.com/jupyter/notebook/tree/master/notebook/lab).
 
-![JupyterLab Demo](jupyter-plugins-demo.gif)
+[API Docs](http://jupyter.github.io/jupyter-js-plugins/)
 
+<img src="jupyter-plugins-demo.gif" alt="JupyterLab Demo" style="width: 100%;"/>
 
 Package Install
 ---------------
@@ -16,7 +17,7 @@ Package Install
 
 ```bash
 npm install --save jupyter-js-plugins
-conda install notebook  # notebook 4.1+ required
+conda install notebook  # notebook 4.2+ required
 ```
 
 
@@ -33,7 +34,7 @@ git clone https://github.com/jupyter/jupyter-js-plugins.git
 cd jupyter-js-plugins
 npm install
 npm run build
-conda install notebook  # notebook 4.1+ required
+conda install notebook  # notebook 4.2+ required
 ```
 
 **Rebuild**
@@ -87,6 +88,18 @@ Earlier versions may also work, but come with no guarantees.
 - IE 11+
 - Firefox 32+
 - Chrome 38+
+
+Note: "requirejs" must be included in a global context (usually as a
+`<script>` tag) for Comm targets.
+
+
+Bundle for the Browser
+----------------------
+
+Follow the package install instructions first.
+
+Any bundler that understands how to `require()` files with `.js` and `.css`
+extensions can be used with this package.
 
 
 Usage Examples

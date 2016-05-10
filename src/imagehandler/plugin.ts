@@ -7,8 +7,8 @@ import {
 } from 'jupyter-js-services';
 
 import {
-  AbstractFileHandler, DocumentManager
-} from 'jupyter-js-ui/lib/docmanager';
+  AbstractFileHandler, FileHandlerRegistry
+} from 'jupyter-js-ui/lib/filehandler';
 
 import {
   Application
@@ -29,10 +29,10 @@ import {
 export
 const imageHandlerExtension = {
   id: 'jupyter.extensions.imageHandler',
-  requires: [DocumentManager, JupyterServices],
-  activate: (app: Application, manager: DocumentManager, services: JupyterServices) => {
+  requires: [FileHandlerRegistry, JupyterServices],
+  activate: (app: Application, registry: FileHandlerRegistry, services: JupyterServices) => {
     let handler = new ImageHandler(services.contentsManager);
-    manager.register(handler);
+    registry.addHandler(handler);
     return Promise.resolve(void 0);
   }
 };
@@ -51,28 +51,28 @@ class ImageHandler extends AbstractFileHandler<Widget> {
   /**
    * Get the options used to save the widget content.
    */
-  protected getFetchOptions(model: IContentsModel): IContentsOpts {
+  protected getFetchOptions(path: string): IContentsOpts {
     return { type: 'file' };
   }
 
   /**
    * Get the options used to save the widget content.
    */
-  protected getSaveOptions(widget: Widget, model: IContentsModel): Promise<IContentsModel> {
-    return Promise.resolve(model);
+  protected getSaveOptions(widget: Widget, path: string): Promise<IContentsOpts> {
+    return Promise.resolve(void 0);
   }
 
   /**
-   * Create the widget from an `IContentsModel`.
+   * Create the widget from a path.
    */
-  protected createWidget(model: IContentsModel): Widget {
+  protected createWidget(path: string): Widget {
     var widget = new Widget();
     widget.node.tabIndex = 0;
     let image = document.createElement('img');
     widget.node.appendChild(image);
     widget.node.style.overflowX = 'auto';
     widget.node.style.overflowY = 'auto';
-    widget.title.text = model.name;
+    widget.title.text = path.split('/').pop();
     return widget;
   }
 
